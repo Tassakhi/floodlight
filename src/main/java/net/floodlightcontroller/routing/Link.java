@@ -31,13 +31,23 @@ public class Link implements Comparable<Link> {
     private DatapathId dst;
     @JsonProperty("dst-port")
     private OFPort dstPort;
-
+    private Integer initialBandwidth;
+    private Integer freeBandwidth;
 
     public Link(DatapathId srcId, OFPort srcPort, DatapathId dstId, OFPort dstPort) {
         this.src = srcId;
         this.srcPort = srcPort;
         this.dst = dstId;
         this.dstPort = dstPort;
+    }
+    
+    public Link(DatapathId srcId, OFPort srcPort, DatapathId dstId, OFPort dstPort, Integer initialBandwidth, Integer freeBW) {
+        this.src = srcId;
+        this.srcPort = srcPort;
+        this.dst = dstId;
+        this.dstPort = dstPort;
+        this.initialBandwidth = initialBandwidth;
+        this.freeBandwidth = freeBW;
     }
 
     /*
@@ -63,6 +73,14 @@ public class Link implements Comparable<Link> {
     public OFPort getDstPort() {
         return dstPort;
     }
+    
+    public Integer getInitialBanwidth() {
+    	return initialBandwidth;
+    }
+    
+    public Integer getFreeBandwidth() {
+    	return freeBandwidth;
+    }
 
     public void setSrc(DatapathId src) {
         this.src = src;
@@ -80,6 +98,22 @@ public class Link implements Comparable<Link> {
         this.dstPort = dstPort;
     }
 
+    public void setInitialBandwidth(Integer initialBW) {
+    	this.initialBandwidth = initialBW;
+    }
+    
+    public void setFreeBandwidth(Integer freeBW) {
+    	this.freeBandwidth = freeBW;
+    }
+    
+    public void subtractBandwidth(Integer BWtoSubtract) {
+    	this.freeBandwidth -= BWtoSubtract;
+    }
+    
+    public void addBandwidth(Integer BWtoAdd) {
+    	this.freeBandwidth += BWtoAdd;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
